@@ -1,5 +1,7 @@
 from django.db import models
 
+CENTS_IN_DOLLAR = 100
+
 
 class Item(models.Model):
     name = models.CharField(
@@ -24,3 +26,6 @@ class Item(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    def get_display_price(self) -> int:
+        return '{0:.2f}'.format(self.price / CENTS_IN_DOLLAR)
