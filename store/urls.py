@@ -12,7 +12,7 @@ urlpatterns = [
         name='landing-page',
     ),
     path(
-        'create-checkout-session/',
+        'create-checkout-session/<pk>/',
         views.CreateCheckoutSessionView.as_view(),
         name='create-checkout-session',
     ),
