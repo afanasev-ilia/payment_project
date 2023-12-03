@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Главная сраница</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body>
+    {% for item in items %}
+      <ul>
+        <li>
+          Название товара: {{ item.name }}
+        </li>
+        <li>
+          Описание товара: {{ item.description }}
+        </li>
+        <li>
+          Цена: {{ item.get_display_price }} $
+        </li>
+      </ul>  
+      <a href="{% url 'store:item-page' item.id %}">Купить </a> 
+      {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %} 
+  </body>

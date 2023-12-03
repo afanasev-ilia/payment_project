@@ -1,28 +1,42 @@
 from typing import Any
 import stripe
+from django.db.models.query import QuerySet
 from django.conf import settings
-from django.http import JsonResponse
 from django.views import View
 from django.views.generic import TemplateView
+from django.shortcuts import redirect
 
 from store.models import Item
-
-YOUR_DOMAIN = 'http://127.0.0.1:8000'
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-class ProductLandingPageViev(TemplateView):
-    template_name = 'store/landing.html'
+class IndexPageView(TemplateView):
+    template_name = 'store/index.html'
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, QuerySet]:
+        context = super(IndexPageView, self).get_context_data(**kwargs)
+        context['items'] = Item.objects.all()
+        return context
+
+
+class SuccessPageView(TemplateView):
+    template_name = 'store/success.html'
+
+
+class CancelPageView(TemplateView):
+    template_name = 'store/cancel.html'
+
+
+class ItemPageView(TemplateView):
+    template_name = 'store/item.html'
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        product = Item.objects.get(name='Подписка ++')
-        context = super(ProductLandingPageViev, self).get_context_data(
-            **kwargs
-        )
+        item = Item.objects.get(id=self.kwargs['pk'])
+        context = super(ItemPageView, self).get_context_data(**kwargs)
         context.update(
             {
-                'product': product,
+                'item': item,
                 'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY,
             }
         )
@@ -31,7 +45,7 @@ class ProductLandingPageViev(TemplateView):
 
 class CreateCheckoutSessionView(View):
     def post(self, request, *args, **kwargs):
-        product_id = self.kwargs["pk"]
+        product_id = self.kwargs['pk']
         product = Item.objects.get(id=product_id)
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
@@ -48,7 +62,7 @@ class CreateCheckoutSessionView(View):
                 },
             ],
             mode='payment',
-            success_url=YOUR_DOMAIN + '/success/',
-            cancel_url=YOUR_DOMAIN + '/cancel/',
+            success_url=settings.YOUR_DOMAIN + '/success/',
+            cancel_url=settings.YOUR_DOMAIN + '/cancel/',
         )
-        return JsonResponse({'id': checkout_session.id})
+        return redirect(checkout_session.url, code=303)

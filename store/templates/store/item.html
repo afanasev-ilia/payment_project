@@ -7,13 +7,13 @@
   </head>
   <body>
     <section>
-      <div class="product">
+      <div class="item">
         <div class="description">
-          <h3>{{product.name}}</h3>
-          <h5>${{product.get_display_price}}</h5>
+          <h3>{{item.name}}</h3>
+          <h5>${{item.get_display_price}}</h5>
         </div>
       </div>
-      <form>
+      <form action={% url 'store:create-checkout-session' item.id %} method="POST">
         <button type="submit" id="checkout-button">Купить</button>
         {% csrf_token %}
       </form>
@@ -24,7 +24,7 @@
     var stripe = Stripe("{{STRIPE_PUBLIC_KEY}}");
     var checkoutButton = document.getElementById("checkout-button");
     checkoutButton.addEventListener("click", function () {
-      fetch("{% url 'store:create-checkout-session' product.id %}", {
+      fetch("{% url 'store:create-checkout-session' item.id %}", {
         method: "POST",
         headers: {
             'X-CSRFToken': csrftoken
