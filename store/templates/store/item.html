@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+  {% load static %}
+
   <head>
     <title>Страница покупки</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src="https://js.stripe.com/v3/"></script>
   </head>
   <body>
@@ -13,37 +15,9 @@
           <h5>${{item.get_display_price}}</h5>
         </div>
       </div>
-      <form action={% url 'store:create-checkout-session' item.id %} method="POST">
-        <button type="submit" id="checkout-button">Купить</button>
+      <form action={% url 'store:create-checkout-session' item.id %} method="GET">
+        <button type="submit" id="checkout-button">Buy</button>
         {% csrf_token %}
       </form>
     </section>
   </body>
-  <script type="text/javascript">
-    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-    var stripe = Stripe("{{STRIPE_PUBLIC_KEY}}");
-    var checkoutButton = document.getElementById("checkout-button");
-    checkoutButton.addEventListener("click", function () {
-      fetch("{% url 'store:create-checkout-session' item.id %}", {
-        method: "POST",
-        headers: {
-            'X-CSRFToken': csrftoken
-        }
-      })
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (session) {
-          return stripe.redirectToCheckout({ sessionId: session.id });
-        })
-        .then(function (result) {
-          if (result.error) {
-            alert(result.error.message);
-          }
-        })
-        .catch(function (error) {
-          console.error("Error:", error);
-        });
-    });
-  </script>
-</html>

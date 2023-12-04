@@ -88,6 +88,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
 
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')

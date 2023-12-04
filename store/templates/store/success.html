@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Спасибо за покупку!</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <section>
-    <p>
-      Спасибо за покупку!
-    </p>
-  </section>
-</body>
+  {% load static %}
+
+  <head>
+    <title>Спасибо за покупку!</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+  <body>
+    <section>
+      <p>
+        Спасибо за покупку!
+      </p>
+    </section>
+  </body>
 </html>

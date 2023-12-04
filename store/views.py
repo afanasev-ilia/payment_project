@@ -15,7 +15,7 @@ class IndexPageView(TemplateView):
     template_name = 'store/index.html'
 
     def get_context_data(self, **kwargs: Any) -> dict[str, QuerySet]:
-        context = super(IndexPageView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['items'] = Item.objects.all()
         return context
 
@@ -32,8 +32,8 @@ class ItemPageView(TemplateView):
     template_name = 'store/item.html'
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        item = Item.objects.get(id=self.kwargs['pk'])
-        context = super(ItemPageView, self).get_context_data(**kwargs)
+        item = Item.objects.get(id=self.kwargs['id'])
+        context = super().get_context_data(**kwargs)
         context.update(
             {
                 'item': item,
@@ -44,11 +44,9 @@ class ItemPageView(TemplateView):
 
 
 class CreateCheckoutSessionView(View):
-    def post(self, request, *args, **kwargs):
-        product_id = self.kwargs['pk']
-        product = Item.objects.get(id=product_id)
+    def get(self, request, *args, **kwargs):
+        product = Item.objects.get(id=self.kwargs['id'])
         checkout_session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
             line_items=[
                 {
                     'price_data': {

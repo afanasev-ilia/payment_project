@@ -12,12 +12,12 @@ urlpatterns = [
         name='index',
     ),
     path(
-        'item/<pk>/',
+        'item/<id>/',
         views.ItemPageView.as_view(),
         name='item-page',
     ),
     path(
-        'create-checkout-session/<pk>/',
+        'buy/<id>/',
         views.CreateCheckoutSessionView.as_view(),
         name='create-checkout-session',
     ),

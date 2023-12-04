@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
+  {% load static %}
+
   <head>
     <title>Главная сраница</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
   </head>
   <body>
     {% for item in items %}
@@ -17,8 +18,8 @@
         <li>
           Цена: {{ item.get_display_price }} $
         </li>
+        <a href="{% url 'store:item-page' item.id %}">Посмотреть подробное описание и купить </a> 
       </ul>  
-      <a href="{% url 'store:item-page' item.id %}">Купить </a> 
       {% if not forloop.last %}<hr>{% endif %}
     {% endfor %} 
   </body>
