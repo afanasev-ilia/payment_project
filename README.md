@@ -44,31 +44,22 @@ docker-compose up -d --build
 Выполняем миграции:
 
 ```bash
-docker-compose exec web python manage.py migrate
+docker-compose exec payment_project python manage.py migrate
 ```
 
 Создаем суперппользователя:
 
 ```bash
-docker-compose exec web python manage.py createsuperuser
-```
-
-Собираем статику проекта:
-
-```bash
-docker-compose exec web python manage.py collectstatic --no-input
+docker-compose exec payment_project python manage.py createsuperuser
 ```
 
 ##### Шаблон наполнения .env
 
 ```
-DB_ENGINE=django.db.backends.postgresql # указываем, что работаем с postgresql
-DB_NAME=postgres # имя базы данных
-POSTGRES_USER=postgres # логин для подключения к базе данных
-POSTGRES_PASSWORD=postgres # пароль для подключения к БД (установите свой)
-DB_HOST=db # название сервиса (контейнера)
-DB_PORT=5432 # порт для подключения к БД 
-```
+SECRET_KEY = '**************************************************'
+STRIPE_PUBLIC_KEY = 'pk_test_***********************************'
+STRIPE_SECRET_KEY = 'sk_test_***********************************'
+STRIPE_WEBHOOK_SECRET = '************'
 
 ## Автор
 
