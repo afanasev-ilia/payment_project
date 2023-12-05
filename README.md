@@ -10,14 +10,43 @@ Python 3.9 Django 2.2 Stripe API Docker
 
 ## Запуск проекта в dev-режиме
 
-- Установите и активируйте виртуальное окружение
-- Установите зависимости из файла requirements.txt
+Клонируем репозиторий и переходим в него в командной строке:
+
+```bash
+git clone https://github.com/afanasev-ilia/payment_project
+```
+
+```bash
+cd payment_project
+```
+
+Устанавливаем и активируем виртуальное окружение:
+
+```bash
+python -m venv venv
+```
+
+```bash
+source venv/Scripts/activate
+```
+
+Устанавливаем зависимости из файла requirements.txt
 
 ```bash
 pip install -r requirements.txt
 ``` 
 
-- В папке с файлом manage.py выполните команду:
+Выполняем миграции и создаем суперппользователя:
+
+```bash
+python manage.py migrate
+```
+
+```bash
+python manage.py createsuperuser
+```
+
+Запускаем сервер в режиме разработки:
 
 ```bash
 python3 manage.py runserver
