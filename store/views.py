@@ -1,10 +1,12 @@
 from typing import Any
+
 import stripe
-from django.db.models.query import QuerySet
 from django.conf import settings
+from django.db.models.query import QuerySet
+from django.http import HttpRequest
+from django.shortcuts import HttpResponse, redirect
 from django.views import View
 from django.views.generic import TemplateView
-from django.shortcuts import redirect
 
 from store.models import Item
 
@@ -44,7 +46,9 @@ class ItemPageView(TemplateView):
 
 
 class CreateCheckoutSessionView(View):
-    def get(self, request, *args, **kwargs):
+    def get(
+        self, request: HttpRequest, *args: Any, **kwargs: Any
+    ) -> HttpResponse:
         product = Item.objects.get(id=self.kwargs['id'])
         checkout_session = stripe.checkout.Session.create(
             line_items=[
