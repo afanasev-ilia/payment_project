@@ -49,22 +49,28 @@ class CreateCheckoutSessionView(View):
     def get(
         self, request: HttpRequest, *args: Any, **kwargs: Any
     ) -> HttpResponse:
-        product = Item.objects.get(id=self.kwargs['id'])
-        checkout_session = stripe.checkout.Session.create(
-            line_items=[
-                {
-                    'price_data': {
-                        'currency': 'usd',
-                        'unit_amount': product.price,
-                        'product_data': {
-                            'name': product.name,
+        try:
+            product = Item.objects.get(id=self.kwargs['id'])
+            checkout_session = stripe.checkout.Session.create(
+                line_items=[
+                    {
+                        'price_data': {
+                            'currency': 'usd',
+                            'unit_amount': product.price,
+                            'product_data': {
+                                'name': product.name,
+                            },
                         },
+                        'quantity': 1,
                     },
-                    'quantity': 1,
-                },
-            ],
-            mode='payment',
-            success_url=settings.YOUR_DOMAIN + '/success/',
-            cancel_url=settings.YOUR_DOMAIN + '/cancel/',
-        )
+                ],
+                mode='payment',
+                success_url=settings.YOUR_DOMAIN
+                + '/success/?session_id={CHECKOUT_SESSION_ID}',
+                cancel_url=settings.YOUR_DOMAIN
+                + '/cancel/?session_id={CHECKOUT_SESSION_ID}',
+            )
+        except Exception as e:
+            return str(e)
+
         return redirect(checkout_session.url, code=303)
