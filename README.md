@@ -89,7 +89,6 @@ docker-compose exec payment_project python manage.py createsuperuser
 SECRET_KEY = '**************************************************'
 STRIPE_PUBLIC_KEY = 'pk_test_***********************************'
 STRIPE_SECRET_KEY = 'sk_test_***********************************'
-STRIPE_WEBHOOK_SECRET = '************'
 ```
 
 ## Автор
