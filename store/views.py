@@ -19,6 +19,7 @@ class IndexPageView(TemplateView):
     def get_context_data(self, **kwargs: Any) -> dict[str, QuerySet]:
         context = super().get_context_data(**kwargs)
         context['items'] = Item.objects.all()
+        print(type(context))
         return context
 
 

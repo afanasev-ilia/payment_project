@@ -1,10 +1,15 @@
-# payment_project
+# 💳 Payment Project (Django)
 
-## Описание
+Проект для обработки платежей с интеграцией Stripe и другими платежными системами на базе Django.
 
-Приложение для онлайн-покупок с использовнием Stripe API
 
-### Технологии
+## Технологии
+
+![Python Version](https://img.shields.io/badge/python-3.7+-blue.svg)
+![Django Version](https://img.shields.io/badge/django-2.2.19-green.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+
+
 
 Python 3.9 Django 2.2 Stripe API Docker
 

@@ -13,9 +13,6 @@
           Название товара: {{ item.name }}
         </li>
         <li>
-          Описание товара: {{ item.description }}
-        </li>
-        <li>
           Цена: {{ item.get_display_price }} $
         </li>
         <a href="{% url 'store:item-page' item.id %}">Посмотреть подробное описание и купить </a> 
