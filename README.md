@@ -5,13 +5,12 @@
 
 ## Технологии
 
-![Python Version](https://img.shields.io/badge/python-3.7+-blue.svg)
+![Python Version](https://img.shields.io/badge/python-3.9+-blue.svg)
 ![Django Version](https://img.shields.io/badge/django-2.2.19-green.svg)
+![Stripe](https://img.shields.io/badge/Stripe-626CD9?logo=stripe&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-
-
-Python 3.9 Django 2.2 Stripe API Docker
 
 ## Запуск проекта в dev-режиме
 
